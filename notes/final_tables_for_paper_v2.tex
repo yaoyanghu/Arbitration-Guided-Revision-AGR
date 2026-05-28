@@ -1,0 +1,62 @@
+% Final tables for FEVER metadata-aware grounded retrieval paper
+
+\begin{table}[t]
+\centering
+\caption{Main metadata-aware family results on the disjoint 1000 FEVER validation split.}
+\begin{tabular}{lccc}
+\hline
+variant & strict R@1/R@5/R@10 & relaxed R@1/R@5/R@10 & strict imp./reg. \\
+\hline
+routeA\_bm25 & 0.368/0.627/0.720 & 0.737/0.883/0.918 & 0/0 \\
+routeA\_bm25\_title\_overlap & 0.415/0.680/0.720 & 0.760/0.895/0.918 & 49/2 \\
+routeA\_bm25\_exact\_title\_boost & 0.544/0.708/0.720 & 0.801/0.904/0.918 & 192/16 \\
+routeA\_bm25\_alias\_redirect\_match & 0.357/0.626/0.720 & 0.733/0.883/0.918 & 1/12 \\
+routeA\_bm25\_disambiguation\_title\_match & 0.378/0.622/0.720 & 0.749/0.887/0.918 & 22/12 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Efficiency frontier under a fixed BM25 candidate budget.}
+\begin{tabular}{lcccc}
+\hline
+variant & strict MRR & strict nDCG@5 & strict nDCG@10 & mean first-hit rank \\
+\hline
+routeA\_bm25 & 0.478 & 0.502 & 0.534 & 2.575 \\
+routeA\_bm25\_title\_overlap & 0.520 & 0.551 & 0.567 & 2.078 \\
+routeA\_bm25\_exact\_title\_boost & 0.617 & 0.636 & 0.641 & 1.451 \\
+routeA\_bm25\_alias\_redirect\_match & 0.472 & 0.497 & 0.530 & 2.594 \\
+routeA\_bm25\_disambiguation\_title\_match & 0.483 & 0.505 & 0.538 & 2.568 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Diagnosis-oriented summary of metadata-aware family behavior.}
+\begin{tabular}{p{0.23\linewidth}p{0.25\linewidth}p{0.22\linewidth}p{0.22\linewidth}}
+\hline
+variant & dominant improved claim types & dominant regression signal & interpretation \\
+\hline
+title overlap & plain entity surface; some type-word claims & rare plain lexical confusions & conservative lexical metadata cue \\
+exact title boost & plain entity surface; some type-word claims & stronger exact-match over-promotion & strongest aggressive cue \\
+disambiguation title match & type-word claims; parenthetical surface cues & type-sensitive overfiring & supports disambiguation diagnosis \\
+alias redirect match & negligible positive effect & noisy alias-like surface matches & negative control rather than headline method \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Title overlap versus exact title boost.}
+\begin{tabular}{lcccc}
+\hline
+variant & strict top1 & strict $\Delta$top1 & strict imp./reg. & relaxed top1 \\
+\hline
+routeA\_bm25 & 368 & 0 & 0/0 & 737 \\
+routeA\_bm25\_title\_overlap & 415 & 47 & 49/2 & 760 \\
+routeA\_bm25\_exact\_title\_boost & 544 & 176 & 192/16 & 801 \\
+\hline
+\end{tabular}
+\end{table}

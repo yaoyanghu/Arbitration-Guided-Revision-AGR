@@ -1,0 +1,44 @@
+project:
+  name: New_ChronoRAG
+  root_dir: /home/huyaoyang/Projects/flashrag_project_20251213/New_ChronoRAG
+  seed: 42
+  device: cpu
+
+paths:
+  data_dir: ${project.root_dir}/data
+  processed_data_dir: ${paths.data_dir}/processed
+  corpus_dir: ${paths.data_dir}/corpus
+  index_dir: ${project.root_dir}/indexes
+  runs_dir: ${project.root_dir}/runs
+  log_dir: ${project.root_dir}/logs
+
+mainline:
+  dataset_name: hoh_formal_1024
+  run_stage: formal
+  queries_path: ${paths.processed_data_dir}/hoh_formal_1024.jsonl
+  corpus_path: ${paths.corpus_dir}/hoh_formal_1024_corpus.jsonl
+  bm25_index_dir: ${paths.index_dir}/hoh_formal_1024_bm25
+  retrieval_top_k: 4
+  evidence_top_k: 2
+  bm25_weight: 0.0
+  lexical_weight: 0.0
+  temporal_weight: 1.0
+  conflict_weight: 0.0
+  structured_weight: 0.0
+  reliability_weight: 0.0
+  generation_mode: citation_aware_basic
+  citation_style: bracket
+  retrieval_strategy: standard
+
+# Ablation metadata
+ablation:
+  variant_name: temporal_only
+  base_config: configs/conflict_aware_rag_hoh_formal_1024_linux.yaml
+  formal_or_pilot: formal
+  dataset_size: 1024
+  changed_parameters_only:
+    - bm25_weight: 0.35 -> 0.0
+    - lexical_weight: 0.25 -> 0.0
+    - temporal_weight: 0.20 -> 1.0
+    - conflict_weight: 0.15 -> 0.0
+    - generation_mode: citation_aware -> citation_aware_basic

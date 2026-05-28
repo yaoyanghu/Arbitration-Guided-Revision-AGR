@@ -1,0 +1,31 @@
+project:
+  name: New_ChronoRAG
+  root_dir: D:/HUYAOYANG/Work/New_ChronoRAG
+  seed: 42
+  device: cpu
+
+paths:
+  data_dir: ${project.root_dir}/data
+  processed_data_dir: ${paths.data_dir}/processed
+  corpus_dir: ${paths.data_dir}/corpus
+  index_dir: ${project.root_dir}/indexes
+  runs_dir: ${project.root_dir}/runs
+  log_dir: ${project.root_dir}/logs
+
+mainline:
+  dataset_name: hoh_pilot_64
+  run_stage: sanity_train
+  queries_path: ${paths.processed_data_dir}/hoh_pilot_64.jsonl
+  corpus_path: ${paths.corpus_dir}/hoh_pilot_64_corpus.jsonl
+  bm25_index_dir: ${paths.index_dir}/hoh_pilot_64_bm25
+  retrieval_top_k: 4
+  evidence_top_k: 2
+  bm25_weight: 0.35
+  lexical_weight: 0.25
+  temporal_weight: 0.20
+  conflict_weight: 0.15
+  structured_weight: 0.12
+  learned_weight: 0.0
+  reliability_weight: 0.05
+  generation_mode: citation_aware
+  citation_style: bracket

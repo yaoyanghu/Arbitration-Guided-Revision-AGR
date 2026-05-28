@@ -1,0 +1,14 @@
+temporal:
+  enabled: true
+  time_field: timestamp
+  unknown_time_strategy: keep
+  scoring:
+    recency_weight: 0.4
+    contradiction_penalty: 0.3
+    update_bonus: 0.5
+  labels:
+    - support
+    - contradict
+    - update
+    - complement
+    - ambiguous

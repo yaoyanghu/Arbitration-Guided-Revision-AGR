@@ -1,0 +1,72 @@
+% Table 1: main disjoint 1000 BM25 vs title-overlap result
+\begin{table}[t]
+\centering
+\caption{Main disjoint-1000 result for BM25 versus the title-overlap variant. The unchanged Recall@10 indicates reranking gain rather than candidate-set expansion.}
+\begin{tabular}{lcc}
+\hline
+setting & strict R@1/R@5/R@10 & relaxed R@1/R@5/R@10 \\
+\hline
+routeA\_bm25 & 0.368/0.627/0.720 & 0.737/0.883/0.918 \\
+routeA\_bm25\_title\_overlap & 0.415/0.680/0.720 & 0.760/0.895/0.918 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 2: nearest title-aware lexical baseline comparison
+\begin{table}[t]
+\centering
+\caption{Nearest title-aware lexical baseline comparison on the disjoint-1000 split. Exact title boost is stronger in absolute gain, while title overlap is more conservative.}
+\begin{tabular}{lccccccccc}
+\hline
+setting & sR@1 & sR@5 & sR@10 & rR@1 & rR@5 & rR@10 & $\Delta$top1 & imp. & reg. \\
+\hline
+routeA\_bm25 & 0.368 & 0.627 & 0.720 & 0.737 & 0.883 & 0.918 & 0 & 0 & 0 \\
+routeA\_bm25\_exact\_title\_boost & 0.544 & 0.708 & 0.720 & 0.801 & 0.904 & 0.918 & 176 & 192 & 16 \\
+routeA\_bm25\_title\_overlap & 0.415 & 0.680 & 0.720 & 0.760 & 0.895 & 0.918 & 47 & 49 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 3: label-wise strict results
+\begin{table}[t]
+\centering
+\caption{Label-wise strict results for BM25 versus the title-overlap variant on the disjoint-1000 split.}
+\begin{tabular}{lcccc}
+\hline
+label & baseline R@1/R@5/R@10 & title-overlap R@1/R@5/R@10 & $\Delta$@1 & $\Delta$@5 \\
+\hline
+SUPPORTS & 0.411/0.696/0.770 & 0.466/0.732/0.770 & 0.054 & 0.036 \\
+REFUTES & 0.325/0.560/0.671 & 0.365/0.629/0.671 & 0.040 & 0.069 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 4: significance and confidence intervals
+\begin{table}[t]
+\centering
+\caption{Statistical support for BM25 versus the title-overlap variant. The strict top1 paired test uses discordant pairs 49 vs 2 with exact McNemar-style $p=1.17861\times10^{-12}$.}
+\begin{tabular}{lcccc}
+\hline
+metric & baseline & title-overlap & $\Delta$ & 95\% CI for $\Delta$ \\
+\hline
+strict Recall@1 & 0.368 & 0.415 & 0.047 & [0.034, 0.061] \\
+strict Recall@5 & 0.627 & 0.680 & 0.053 & [0.039, 0.068] \\
+relaxed Recall@1 & 0.737 & 0.760 & 0.023 & [0.012, 0.035] \\
+relaxed Recall@5 & 0.883 & 0.895 & 0.012 & [0.004, 0.021] \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 5: historical split note
+\begin{table}[t]
+\centering
+\caption{Historical split note. The disjoint-1000 split is the only main validation result; the older 1000-query run is non-independent follow-up context.}
+\begin{tabular}{lccccc}
+\hline
+split & status & strict baseline & strict title-overlap & strict $\Delta$top1 & imp./reg. \\
+\hline
+old follow-up 1000 & follow-up & 0.379/0.614/0.705 & 0.429/0.662/0.705 & 50 & 51/1 \\
+new disjoint 1000 & validation & 0.368/0.627/0.720 & 0.415/0.680/0.720 & 47 & 49/2 \\
+\hline
+\end{tabular}
+\end{table}

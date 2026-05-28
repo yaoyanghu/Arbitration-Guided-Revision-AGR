@@ -1,0 +1,91 @@
+% Table 1: 500-query weight sweep results
+\begin{table}[t]
+\centering
+\caption{500-query weight sweep for title overlap reranking.}
+\begin{tabular}{lccc}
+\hline
+title weight & strict R@1 & strict $\Delta$top1 & strict regressions \\
+\hline
+0.1 & 0.356 & 2 & 0 \\
+0.2 & 0.360 & 4 & 0 \\
+0.3 & 0.366 & 7 & 0 \\
+0.4 & 0.378 & 13 & 0 \\
+0.5 & 0.400 & 24 & 0 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 2: old vs new 1000-query comparison
+\begin{table}[t]
+\centering
+\caption{Old non-independent follow-up 1000 versus new disjoint 1000 validation.}
+\begin{tabular}{lccccc}
+\hline
+split & status & strict baseline & strict improved & strict $\Delta$top1 & imp./reg. \\
+\hline
+old follow-up 1000 & follow-up & 0.379/0.614/0.705 & 0.429/0.662/0.705 & 50 & 51/1 \\
+new disjoint 1000 & validation & 0.368/0.627/0.720 & 0.415/0.680/0.720 & 47 & 49/2 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 3: disjoint 1000 main results
+\begin{table}[t]
+\centering
+\caption{Main results on the disjoint 1000-query validation subset.}
+\begin{tabular}{lcc}
+\hline
+setting & strict R@1/R@5/R@10 & relaxed R@1/R@5/R@10 \\
+\hline
+routeA\_bm25 & 0.368/0.627/0.720 & 0.737/0.883/0.918 \\
+routeA\_bm25\_title\_overlap & 0.415/0.680/0.720 & 0.760/0.895/0.918 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 4: disjoint 1000 strict improvement statistics
+\begin{table}[t]
+\centering
+\caption{Strict improvement statistics on the disjoint 1000-query validation subset.}
+\begin{tabular}{cccccc}
+\hline
+baseline strict top1 & improved strict top1 & $\Delta$ & improved cases & regressed cases & relaxed $\Delta$top1 \\
+\hline
+368 & 415 & 47 & 49 & 2 & 23 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 5: disjoint 1000 label-wise strict results
+\begin{table}[t]
+\centering
+\caption{Label-wise strict retrieval results on the disjoint 1000-query validation subset.}
+\begin{tabular}{lcccc}
+\hline
+label & baseline R@1/R@5/R@10 & improved R@1/R@5/R@10 & $\Delta$@1 & $\Delta$@5 \\
+\hline
+SUPPORTS & 0.411/0.696/0.770 & 0.466/0.732/0.770 & 0.054 & 0.036 \\
+REFUTES & 0.325/0.560/0.671 & 0.365/0.629/0.671 & 0.040 & 0.069 \\
+\hline
+\end{tabular}
+\end{table}
+
+% Table 6: old vs new 1000 main differences
+\begin{table}[t]
+\centering
+\caption{Difference summary between the old follow-up 1000 and the new disjoint 1000 validation.}
+\begin{tabular}{lccc}
+\hline
+metric & old follow-up & new disjoint & change \\
+\hline
+strict baseline R@1 & 0.379 & 0.368 & -0.011 \\
+strict improved R@1 & 0.429 & 0.415 & -0.014 \\
+strict baseline R@5 & 0.614 & 0.627 & +0.013 \\
+strict improved R@5 & 0.662 & 0.680 & +0.018 \\
+strict baseline R@10 & 0.705 & 0.720 & +0.015 \\
+strict improved R@10 & 0.705 & 0.720 & +0.015 \\
+strict $\Delta$top1 & 50 & 47 & -3 \\
+strict regressions & 1 & 2 & +1 \\
+\hline
+\end{tabular}
+\end{table}

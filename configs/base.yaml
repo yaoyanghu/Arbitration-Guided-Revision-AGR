@@ -1,0 +1,29 @@
+project:
+  name: ChronoRAG
+  root_dir: ${CHRONORAG_ROOT:/home/huyaoyang/Projects/ChronoRAG}
+  seed: 42
+  device: cuda
+
+paths:
+  data_dir: ${project.root_dir}/data
+  raw_data_dir: ${paths.data_dir}/raw
+  processed_data_dir: ${paths.data_dir}/processed
+  corpus_dir: ${paths.data_dir}/corpus
+  index_dir: ${project.root_dir}/indexes
+  runs_dir: ${project.root_dir}/runs
+  log_dir: ${project.root_dir}/logs
+
+runtime:
+  top_k: 20
+  num_workers: 4
+  use_fp16: true
+
+route_a:
+  dataset_name: fever
+  processed_queries: ${paths.processed_data_dir}/fever/fever.jsonl
+  corpus_path: ${paths.corpus_dir}/demo_corpus.jsonl
+  bm25_index_dir: ${paths.index_dir}/bm25
+  retrieval_top_k: 10
+  bm25_weight: 0.6
+  temporal_weight: 0.2
+  reliability_weight: 0.2

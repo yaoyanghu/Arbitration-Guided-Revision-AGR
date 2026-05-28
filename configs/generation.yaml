@@ -1,0 +1,6 @@
+generation:
+  model_name: Qwen/Qwen2.5-3B-Instruct
+  max_new_tokens: 256
+  temperature: 0.1
+  citation_required: true
+  abstain_on_low_confidence: true

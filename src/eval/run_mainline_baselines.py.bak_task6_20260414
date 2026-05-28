@@ -1,0 +1,273 @@
+from __future__ import annotations
+
+import argparse
+import json
+from copy import deepcopy
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from src.common import ensure_dir, read_json, read_jsonl, read_yaml, write_json, write_jsonl
+from src.eval.eval_conflict_aware_rag import run_pipeline
+from src.retrieval.build_bm25 import build_and_save_index
+
+
+def load_config(config_path: str | Path) -> dict[str, Any]:
+    import os
+
+    def lookup_key(data: dict[str, Any], dotted_key: str) -> Any:
+        current: Any = data
+        for part in dotted_key.split("."):
+            if not isinstance(current, dict) or part not in current:
+                raise KeyError(f"Missing config key: {dotted_key}")
+            current = current[part]
+        return current
+
+    def resolve_string(value: str, context: dict[str, Any]) -> str:
+        resolved = value
+        while "${" in resolved:
+            start = resolved.index("${")
+            end = resolved.index("}", start)
+            token = resolved[start + 2 : end]
+            if ":" in token:
+                key, default = token.split(":", 1)
+            else:
+                key, default = token, ""
+            replacement = lookup_key(context, key) if "." in key else os.environ.get(key, default)
+            resolved = resolved[:start] + str(replacement) + resolved[end + 1 :]
+        return resolved
+
+    def resolve_node(node: Any, context: dict[str, Any]) -> Any:
+        if isinstance(node, dict):
+            resolved_dict: dict[str, Any] = {}
+            for key, value in node.items():
+                resolved_dict[key] = resolve_node(value, {**context, **resolved_dict})
+            return resolved_dict
+        if isinstance(node, list):
+            return [resolve_node(item, context) for item in node]
+        if isinstance(node, str):
+            return resolve_string(node, context)
+        return node
+
+    raw = read_yaml(config_path)
+    return resolve_node(raw, raw)
+
+
+def variant_overrides() -> dict[str, dict[str, Any]]:
+    return {
+        "parametric_only": {
+            "generation_mode": "parametric_only",
+            "retrieval_top_k": 0,
+            "evidence_top_k": 0,
+        },
+        "vanilla_rag_extractive": {
+            "generation_mode": "extractive",
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "reliability_weight": 0.0,
+        },
+        "stronger_retrieval_template": {
+            "generation_mode": "local_instruct",
+            "lexical_weight": 0.35,
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "latest_timestamp_wins": {
+            "generation_mode": "citation_aware_basic",
+            "bm25_weight": 0.05,
+            "lexical_weight": 0.05,
+            "temporal_weight": 0.90,
+            "conflict_weight": 0.0,
+            "structured_weight": 0.0,
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "majority_vote": {
+            "generation_mode": "majority_vote",
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "structured_weight": 0.0,
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "temporal_only_rerank": {
+            "generation_mode": "citation_aware_basic",
+            "bm25_weight": 0.0,
+            "lexical_weight": 0.0,
+            "temporal_weight": 1.0,
+            "conflict_weight": 0.0,
+            "structured_weight": 0.0,
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "judge_verify_pipeline": {
+            "generation_mode": "faithfulrag_style",
+            "retrieval_strategy": "standard",
+        },
+        "hyde_like": {
+            "generation_mode": "local_instruct",
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "hyde_like",
+        },
+        "crag_like": {
+            "generation_mode": "local_instruct",
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "crag_like",
+        },
+        "self_rag_style_baseline": {
+            "generation_mode": "local_instruct",
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "self_rag_style",
+        },
+        "astute_style_baseline": {
+            "generation_mode": "local_instruct",
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "astute_style",
+        },
+        "faithfulrag_style_baseline": {
+            "generation_mode": "faithfulrag_style",
+            "retrieval_strategy": "standard",
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "structured_weight": 0.0,
+            "reliability_weight": 0.0,
+        },
+        "tcr_style_baseline": {
+            "generation_mode": "tcr_style",
+            "retrieval_strategy": "standard",
+            "temporal_weight": 0.0,
+            "conflict_weight": 0.0,
+            "structured_weight": 0.0,
+            "reliability_weight": 0.0,
+        },
+        "no_temporal": {
+            "generation_mode": "citation_aware_basic",
+            "temporal_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "no_conflict": {
+            "generation_mode": "citation_aware",
+            "conflict_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "no_structured": {
+            "generation_mode": "citation_aware",
+            "structured_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "no_learned": {
+            "generation_mode": "citation_aware",
+            "learned_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "no_abstention": {
+            "generation_mode": "citation_aware",
+            "retrieval_strategy": "standard",
+        },
+        "no_source": {
+            "generation_mode": "citation_aware",
+            "reliability_weight": 0.0,
+            "retrieval_strategy": "standard",
+        },
+        "full_model": {
+            "retrieval_strategy": "standard",
+        },
+        "source_enhanced": {
+            "generation_mode": "citation_aware",
+            "reliability_weight": 0.30,
+            "retrieval_strategy": "standard",
+        },
+    }
+
+
+def merge_variant(base: dict[str, Any], overrides: dict[str, Any]) -> dict[str, Any]:
+    config = deepcopy(base)
+    config["mainline"].update(overrides)
+    return config
+
+
+def ensure_index(config: dict[str, Any]) -> None:
+    mainline = config["mainline"]
+    index_dir = Path(mainline["bm25_index_dir"])
+    corpus_path = Path(mainline["corpus_path"])
+    json_index = index_dir / "bm25_index.json"
+    sqlite_index = index_dir / "bm25_fts.db"
+    if not json_index.exists() and not sqlite_index.exists():
+        build_and_save_index(corpus_path, index_dir, backend="auto")
+        return
+
+    if json_index.exists():
+        current_count = sum(1 for _ in read_jsonl(corpus_path))
+        payload = read_json(json_index)
+        indexed_count = len(payload.get("corpus", []))
+        if indexed_count != current_count:
+            build_and_save_index(corpus_path, index_dir, backend="json")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Run baseline matrix for the New_ChronoRAG mainline.")
+    parser.add_argument("--config", required=True)
+    parser.add_argument("--run-group", required=True)
+    parser.add_argument("--variants", nargs="*", default=list(variant_overrides().keys()))
+    args = parser.parse_args()
+
+    base_config = load_config(args.config)
+    ensure_index(base_config)
+    run_group_dir = ensure_dir(Path(base_config["paths"]["runs_dir"]) / args.run_group)
+    summary_rows = []
+
+    for variant in args.variants:
+        overrides = variant_overrides()[variant]
+        variant_config = merge_variant(base_config, overrides)
+        exp_name = f"{args.run_group}__{variant}"
+        result = run_pipeline(variant_config, exp_name)
+        summary_rows.append(
+            {
+                "variant": variant,
+                "run_dir": result["run_dir"],
+                "metrics": result["metrics"],
+            }
+        )
+
+    write_json(run_group_dir / "summary.json", {"variants": summary_rows, "timestamp": datetime.now().isoformat()})
+    write_jsonl(
+        run_group_dir / "summary.jsonl",
+        [
+            {
+                "variant": row["variant"],
+                "run_dir": row["run_dir"],
+                "exact_match": row["metrics"]["answer_level"]["exact_match"],
+                "token_f1": row["metrics"]["answer_level"]["token_f1"],
+                "citation_title_recall": row["metrics"]["answer_level"]["citation_title_recall"],
+                "status": row["metrics"]["status"],
+            }
+            for row in summary_rows
+        ],
+    )
+    lines = [
+        "# Mainline Baseline Summary",
+        "",
+        "| variant | exact_match | token_f1 | citation_title_recall | run_dir |",
+        "| --- | ---: | ---: | ---: | --- |",
+    ]
+    for row in summary_rows:
+        metrics = row["metrics"]["answer_level"]
+        lines.append(
+            f"| {row['variant']} | {metrics['exact_match']:.3f} | {metrics['token_f1']:.3f} | {metrics['citation_title_recall']} | {row['run_dir']} |"
+        )
+    (run_group_dir / "summary.md").write_text("\n".join(lines), encoding="utf-8")
+    print(json.dumps({"run_group": args.run_group, "variants": [row["variant"] for row in summary_rows]}, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()

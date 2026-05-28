@@ -1,0 +1,30 @@
+project:
+  name: New_ChronoRAG
+  root_dir: /home/huyaoyang/Projects/flashrag_project_20251213/New_ChronoRAG
+  seed: 42
+  device: cpu
+
+paths:
+  data_dir: ${project.root_dir}/data
+  processed_data_dir: ${paths.data_dir}/processed
+  corpus_dir: ${paths.data_dir}/corpus
+  index_dir: ${project.root_dir}/indexes
+  runs_dir: ${project.root_dir}/runs
+  log_dir: ${project.root_dir}/logs
+
+mainline:
+  dataset_name: hoh_formal_1024
+  run_stage: formal
+  queries_path: ${paths.processed_data_dir}/hoh_formal_1024.jsonl
+  corpus_path: ${paths.corpus_dir}/hoh_formal_1024_corpus.jsonl
+  bm25_index_dir: ${paths.index_dir}/hoh_formal_1024_bm25
+  retrieval_top_k: 4
+  evidence_top_k: 2
+  bm25_weight: 0.35
+  lexical_weight: 0.25
+  temporal_weight: 0.20
+  conflict_weight: 0.15
+  structured_weight: 0.0
+  reliability_weight: 0.0
+  generation_mode: citation_aware
+  citation_style: bracket

@@ -1,0 +1,29 @@
+project:
+  name: New_ChronoRAG
+  root_dir: D:/HUYAOYANG/Work/New_ChronoRAG
+  seed: 42
+  device: cpu
+
+paths:
+  data_dir: ${project.root_dir}/data
+  processed_data_dir: ${paths.data_dir}/processed
+  corpus_dir: ${paths.data_dir}/corpus
+  index_dir: ${project.root_dir}/indexes
+  runs_dir: ${project.root_dir}/runs
+  log_dir: ${project.root_dir}/logs
+
+mainline:
+  dataset_name: fever_hetero_subset_20
+  run_stage: followup
+  queries_path: ${paths.processed_data_dir}/fever/fever_hetero_subset_20.jsonl
+  corpus_path: ${paths.corpus_dir}/fever_hetero_subset_20_corpus.jsonl
+  bm25_index_dir: ${paths.index_dir}/fever_hetero_subset_20_bm25
+  retrieval_top_k: 4
+  evidence_top_k: 2
+  bm25_weight: 0.35
+  lexical_weight: 0.30
+  temporal_weight: 0.0
+  conflict_weight: 0.10
+  reliability_weight: 0.15
+  generation_mode: citation_aware
+  citation_style: bracket

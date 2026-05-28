@@ -1,0 +1,35 @@
+project:
+  name: New_ChronoRAG
+  root_dir: /home/huyaoyang/Projects/flashrag_project_20251213/New_ChronoRAG
+  seed: 42
+  device: cpu
+
+paths:
+  data_dir: ${project.root_dir}/data
+  processed_data_dir: ${paths.data_dir}/processed
+  corpus_dir: ${paths.data_dir}/corpus
+  index_dir: ${project.root_dir}/indexes
+  runs_dir: ${project.root_dir}/runs
+  log_dir: ${project.root_dir}/logs
+
+mainline:
+  dataset_name: hotpotqa_dev_distractor_smoke32
+  queries_path: /home/huyaoyang/Projects/flashrag_project_20251213/New_ChronoRAG/data/processed/hotpotqa_dev_distractor_smoke32.jsonl
+  corpus_path: /home/huyaoyang/Projects/flashrag_project_20251213/New_ChronoRAG/data/corpus/hotpotqa_dev_distractor_smoke32_corpus.jsonl
+  bm25_index_dir: /home/huyaoyang/Projects/flashrag_project_20251213/New_ChronoRAG/indexes/hotpotqa_dev_distractor_smoke32_bm25
+  retrieval_top_k: 6
+  evidence_top_k: 3
+  bm25_weight: 0.45
+  lexical_weight: 0.25
+  temporal_weight: 0.15
+  conflict_weight: 0.10
+  structured_weight: 0.0
+  reliability_weight: 0.05
+  learned_weight: 0.0
+  posterior_enabled: false
+  gate_enabled: false
+  fixed_gamma: 0.5
+  generation_mode: citation_aware
+  citation_style: bracket
+  retrieval_strategy: standard
+  run_stage: debug_or_pilot

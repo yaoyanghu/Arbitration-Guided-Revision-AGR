@@ -1,0 +1,719 @@
+{
+  "temporal_success": [
+    {
+      "query_id": "s_1",
+      "query": "When was the time the Dodgers played the Yankees in the World Series?",
+      "gold_answer": "1981",
+      "predicted_answer": "1981 [1] | evidence: [2]",
+      "selected_evidence": [
+        {
+          "doc_id": "temprageval::s_1::1",
+          "title": "temprageval_e1_s_1",
+          "text": "In 1998, the Yankees celebrated the 20th anniversary of the 1977, 1978 and 1981 World Series that they played against the Los Angeles Dodgers, and invited some members of those Dodger teams.",
+          "score": 0.8425,
+          "citation_id": "[1]",
+          "source": "temprageval",
+          "timestamp": "1981"
+        },
+        {
+          "doc_id": "temprageval::s_2::1",
+          "title": "temprageval_e1_s_2",
+          "text": "In 1998, the Yankees celebrated the 20th anniversary of the 1977, 1978 and 1981 World Series that they played against the Los Angeles Dodgers, and invited some members of those Dodger teams.",
+          "score": 0.8425,
+          "citation_id": "[2]",
+          "source": "temprageval",
+          "timestamp": "1981"
+        }
+      ],
+      "citations": [
+        "[1]",
+        "[2]"
+      ],
+      "metrics": {
+        "exact_match": 1.0,
+        "token_f1": 1.0,
+        "citation_title_recall": 0.5
+      }
+    },
+    {
+      "query_id": "s_2",
+      "query": "When was the last time the Dodgers played the Yankees in the World Series as of 1981?",
+      "gold_answer": "1981",
+      "predicted_answer": "1981 [1] | evidence: [2]",
+      "selected_evidence": [
+        {
+          "doc_id": "temprageval::s_1::1",
+          "title": "temprageval_e1_s_1",
+          "text": "In 1998, the Yankees celebrated the 20th anniversary of the 1977, 1978 and 1981 World Series that they played against the Los Angeles Dodgers, and invited some members of those Dodger teams.",
+          "score": 0.8425,
+          "citation_id": "[1]",
+          "source": "temprageval",
+          "timestamp": "1981"
+        },
+        {
+          "doc_id": "temprageval::s_2::1",
+          "title": "temprageval_e1_s_2",
+          "text": "In 1998, the Yankees celebrated the 20th anniversary of the 1977, 1978 and 1981 World Series that they played against the Los Angeles Dodgers, and invited some members of those Dodger teams.",
+          "score": 0.8425,
+          "citation_id": "[2]",
+          "source": "temprageval",
+          "timestamp": "1981"
+        }
+      ],
+      "citations": [
+        "[1]",
+        "[2]"
+      ],
+      "metrics": {
+        "exact_match": 1.0,
+        "token_f1": 1.0,
+        "citation_title_recall": 0.5
+      }
+    },
+    {
+      "query_id": "s_3",
+      "query": "When was the last time the Dodgers played the Yankees in the World Series as of 1991?",
+      "gold_answer": "1981",
+      "predicted_answer": "1981 [1] | evidence: [2]",
+      "selected_evidence": [
+        {
+          "doc_id": "temprageval::s_1::1",
+          "title": "temprageval_e1_s_1",
+          "text": "In 1998, the Yankees celebrated the 20th anniversary of the 1977, 1978 and 1981 World Series that they played against the Los Angeles Dodgers, and invited some members of those Dodger teams.",
+          "score": 0.8208,
+          "citation_id": "[1]",
+          "source": "temprageval",
+          "timestamp": "1981"
+        },
+        {
+          "doc_id": "temprageval::s_2::1",
+          "title": "temprageval_e1_s_2",
+          "text": "In 1998, the Yankees celebrated the 20th anniversary of the 1977, 1978 and 1981 World Series that they played against the Los Angeles Dodgers, and invited some members of those Dodger teams.",
+          "score": 0.8208,
+          "citation_id": "[2]",
+          "source": "temprageval",
+          "timestamp": "1981"
+        }
+      ],
+      "citations": [
+        "[1]",
+        "[2]"
+      ],
+      "metrics": {
+        "exact_match": 1.0,
+        "token_f1": 1.0,
+        "citation_title_recall": 0.0
+      }
+    }
+  ],
+  "conflict_success": [
+    {
+      "query_id": "52",
+      "query": "How many names of Radha are mentioned in the fifth chapter of the Sanskrit scripture \"Narada Pancharatra\" under the title \"Shri Radha Saharsnama Strotam\"?",
+      "gold_answer": "1008",
+      "predicted_answer": "1008 [1] | evidence: [2]",
+      "selected_evidence": [
+        {
+          "doc_id": "hoh::52",
+          "title": "Radha",
+          "text": "The fifth chapter, \"Fifth night\" of \"Narada Pancharatra\" mentioned 1008 names of Radha under the title \"Shri Radha Saharsnama Strotam\".",
+          "score": 0.9504,
+          "citation_id": "[1]",
+          "source": "hoh",
+          "timestamp": "2024-09-01 00:00:00"
+        },
+        {
+          "doc_id": "hoh::52::stale_1",
+          "title": "Radha",
+          "text": "The fifth chapter of Sanskrit scripture \"Narada Pancharatra\" mentioned more than 1000 names of Radha under the title \"Shri Radha Saharsnama Strotam\".",
+          "score": 0.8763,
+          "citation_id": "[2]",
+          "source": "hoh",
+          "timestamp": "2024-08-01"
+        }
+      ],
+      "citations": [
+        "[1]",
+        "[2]"
+      ],
+      "metrics": {
+        "exact_match": 1.0,
+        "token_f1": 1.0,
+        "citation_title_recall": 1.0
+      }
+    },
+    {
+      "query_id": "55",
+      "query": "When did freeze dried candy see a major surge in popularity?",
+      "gold_answer": "2020",
+      "predicted_answer": "2020 [1]",
+      "selected_evidence": [
+        {
+          "doc_id": "hoh::55",
+          "title": "Freeze drying",
+          "text": "In 2020, freeze dried candy saw a major surge in popularity due to viral popularity on social media with freeze dried versions of popular candies such as skittles, nerd clusters, and sweet tarts appearing in stores.",
+          "score": 0.9184,
+          "citation_id": "[1]",
+          "source": "hoh",
+          "timestamp": "2024-12-01 00:00:00"
+        }
+      ],
+      "citations": [
+        "[1]"
+      ],
+      "metrics": {
+        "exact_match": 1.0,
+        "token_f1": 1.0,
+        "citation_title_recall": 1.0
+      }
+    },
+    {
+      "query_id": "79",
+      "query": "What type of spirit did José Bedia Valdés receive at his initiation into Palo?",
+      "gold_answer": "mpungu",
+      "predicted_answer": "mpungu [1] | evidence: [2]",
+      "selected_evidence": [
+        {
+          "doc_id": "hoh::79",
+          "title": "Palo (religion)",
+          "text": "By the start of the 21st century, various Cuban artists were incorporating Palo imagery into their work; one example was José Bedia Valdés, who received the \"mpungu\" Sarabanda at his initiation into Palo.",
+          "score": 0.9346,
+          "citation_id": "[1]",
+          "source": "hoh",
+          "timestamp": "2024-08-01 00:00:00"
+        },
+        {
+          "doc_id": "hoh::79::stale_1",
+          "title": "Palo (religion)",
+          "text": "By the start of the 21st century, various Cuban artists were incorporating Palo imagery into their work; one example was José Bedia Valdés, who received the \"nganga\" spirit Sarabanda at his initiation into Palo.",
+          "score": 0.8591,
+          "citation_id": "[2]",
+          "source": "hoh",
+          "timestamp": "2024-07-01"
+        }
+      ],
+      "citations": [
+        "[1]",
+        "[2]"
+      ],
+      "metrics": {
+        "exact_match": 1.0,
+        "token_f1": 1.0,
+        "citation_title_recall": 1.0
+      }
+    }
+  ],
+  "failure_examples": [
+    {
+      "query_id": "3",
+      "query": "What percentage of people at least 15 years old had a bachelor's or higher degree?",
+      "gold_answer": "19.9%",
+      "predicted_answer": "10.0% [1]",
+      "selected_evidence": [
+        {
+          "doc_id": "hoh::191::stale_1",
+          "title": "Tikipunga",
+          "text": "Of those at least 15 years old, 522 (10.0%) people had a bachelor's or higher degree, and 1,416 (27.0%) people had no formal qualifications.",
+          "score": 0.8425,
+          "citation_id": "[1]",
+          "source": "hoh",
+          "timestamp": "2024-11-01"
+        }
+      ],
+      "citations": [
+        "[1]"
+      ],
+      "metrics": {
+        "exact_match": 0.0,
+        "token_f1": 0.0,
+        "citation_title_recall": 0.0
+      }
+    },
+    {
+      "query_id": "6",
+      "query": "Who is the current Master of the Horse?",
+      "gold_answer": "The Lord Ashton of Hyde",
+      "predicted_answer": "Lord de Mauley [2] | evidence: [2]",
+      "selected_evidence": [
+        {
+          "doc_id": "hoh::6",
+          "title": "Master of the Horse",
+          "text": "The current Master of the Horse is The Lord Ashton of Hyde.",
+          "score": 0.9547,
+          "citation_id": "[1]",
+          "source": "hoh",
+          "timestamp": "2024-07-01 00:00:00"
+        },
+        {
+          "doc_id": "hoh::6::stale_1",
+          "title": "Master of the Horse",
+          "text": "The current Master of the Horse is Lord de Mauley.",
+          "score": 0.9179,
+          "citation_id": "[2]",
+          "source": "hoh",
+          "timestamp": "2024-06-01"
+        }
+      ],
+      "citations": [
+        "[1]",
+        "[2]"
+      ],
+      "metrics": {
+        "exact_match": 0.0,
+        "token_f1": 0.25,
+        "citation_title_recall": 1.0
+      }
+    },
+    {
+      "query_id": "9",
+      "query": "What is the time period for which the football team was classified by the NJSIAA as Group I South for football?",
+      "gold_answer": "2024–2026",
+      "predicted_answer": "2022-2024 [1] | evidence: [2]",
+      "selected_evidence": [
+        {
+          "doc_id": "hoh::488",
+          "title": "Asbury Park High School",
+          "text": "The school was classified by the NJSIAA as Group I South for football for 2022–2024, which included schools with 185 to 482 students.",
+          "score": 0.8261,
+          "citation_id": "[1]",
+          "source": "hoh",
+          "timestamp": "2024-10-01 00:00:00"
+        },
+        {
+          "doc_id": "hoh::488::stale_1",
+          "title": "Asbury Park High School",
+          "text": "The school was classified by the NJSIAA as Group I South for football for 2022–2024, which included schools with 200 to 463 students.",
+          "score": 0.7839,
+          "citation_id": "[2]",
+          "source": "hoh",
+          "timestamp": "2024-09-01"
+        }
+      ],
+      "citations": [
+        "[1]",
+        "[2]"
+      ],
+      "metrics": {
+        "exact_match": 0.0,
+        "token_f1": 0.5,
+        "citation_title_recall": 0.0
+      }
+    }
+  ],
+  "error_counts": {
+    "wrong_entity_or_wrong_evidence_family": 21,
+    "other_answer_extraction_error": 1426,
+    "wrong_value_from_correct_evidence_family": 276,
+    "temporal_relation_or_year_selection_error": 276
+  },
+  "error_examples": {
+    "wrong_entity_or_wrong_evidence_family": [
+      {
+        "query_id": "3",
+        "query": "What percentage of people at least 15 years old had a bachelor's or higher degree?",
+        "gold_answer": "19.9%",
+        "predicted_answer": "10.0% [1]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::191::stale_1",
+            "title": "Tikipunga",
+            "text": "Of those at least 15 years old, 522 (10.0%) people had a bachelor's or higher degree, and 1,416 (27.0%) people had no formal qualifications.",
+            "score": 0.8425,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-11-01"
+          }
+        ],
+        "citations": [
+          "[1]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 0.0
+        }
+      },
+      {
+        "query_id": "188",
+        "query": "What percentage of the population is aged under 15 years?",
+        "gold_answer": "21.5%",
+        "predicted_answer": "15.7% [1]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::5",
+            "title": "Otago",
+            "text": "There were 37,749 people (15.7%) aged under 15 years, 53,532 (22.2%) aged 15 to 29, 106,926 (44.4%) aged 30 to 64, and 42,690 (17.7%) aged 65 or older.",
+            "score": 0.8422,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-11-01 00:00:00"
+          }
+        ],
+        "citations": [
+          "[1]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 0.0
+        }
+      },
+      {
+        "query_id": "192",
+        "query": "What percentage of people at least 15 years old were unemployed?",
+        "gold_answer": "3.2%",
+        "predicted_answer": "15.3% [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::678::stale_1",
+            "title": "Manawatū District",
+            "text": "Of those at least 15 years old, 3,657 (15.3%) people had a bachelor's or higher degree, and 5,595 (23.4%) people had no formal qualifications.",
+            "score": 0.745,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-10-01"
+          },
+          {
+            "doc_id": "hoh::2",
+            "title": "Otago",
+            "text": "The employment status of those at least 15 was that 101,514 (50.0%) people were employed full-time, 31,086 (15.3%) were part-time, and 4,848 (2.4%) were unemployed.",
+            "score": 0.7408,
+            "citation_id": "[2]",
+            "source": "hoh",
+            "timestamp": "2024-11-01 00:00:00"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.5,
+          "citation_title_recall": 0.0
+        }
+      }
+    ],
+    "other_answer_extraction_error": [
+      {
+        "query_id": "6",
+        "query": "Who is the current Master of the Horse?",
+        "gold_answer": "The Lord Ashton of Hyde",
+        "predicted_answer": "Lord de Mauley [2] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::6",
+            "title": "Master of the Horse",
+            "text": "The current Master of the Horse is The Lord Ashton of Hyde.",
+            "score": 0.9547,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-07-01 00:00:00"
+          },
+          {
+            "doc_id": "hoh::6::stale_1",
+            "title": "Master of the Horse",
+            "text": "The current Master of the Horse is Lord de Mauley.",
+            "score": 0.9179,
+            "citation_id": "[2]",
+            "source": "hoh",
+            "timestamp": "2024-06-01"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.25,
+          "citation_title_recall": 1.0
+        }
+      },
+      {
+        "query_id": "9",
+        "query": "What is the time period for which the football team was classified by the NJSIAA as Group I South for football?",
+        "gold_answer": "2024–2026",
+        "predicted_answer": "2022-2024 [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::488",
+            "title": "Asbury Park High School",
+            "text": "The school was classified by the NJSIAA as Group I South for football for 2022–2024, which included schools with 185 to 482 students.",
+            "score": 0.8261,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-10-01 00:00:00"
+          },
+          {
+            "doc_id": "hoh::488::stale_1",
+            "title": "Asbury Park High School",
+            "text": "The school was classified by the NJSIAA as Group I South for football for 2022–2024, which included schools with 200 to 463 students.",
+            "score": 0.7839,
+            "citation_id": "[2]",
+            "source": "hoh",
+            "timestamp": "2024-09-01"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.5,
+          "citation_title_recall": 0.0
+        }
+      },
+      {
+        "query_id": "11",
+        "query": "What television network did Jill Whelan work for as an associate producer when she met her first husband, Brad St. John?",
+        "gold_answer": "KCOP-TV",
+        "predicted_answer": "Jill Whelan [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::11",
+            "title": "Jill Whelan",
+            "text": "Whelan met her first husband, Brad St.",
+            "score": 0.902,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-11-01 00:00:00"
+          },
+          {
+            "doc_id": "hoh::11::stale_1",
+            "title": "Jill Whelan",
+            "text": "Whelan met her first husband, Brad St.",
+            "score": 0.8591,
+            "citation_id": "[2]",
+            "source": "hoh",
+            "timestamp": "2024-10-01"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 1.0
+        }
+      }
+    ],
+    "wrong_value_from_correct_evidence_family": [
+      {
+        "query_id": "10",
+        "query": "What was Aaron Gibson's weight in high school?",
+        "gold_answer": "Over 350 lbs",
+        "predicted_answer": "410 [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::10",
+            "title": "Aaron Gibson",
+            "text": "He holds the record for heaviest NFL player ever, at 410 lbs, weighing over 350 lbs in high school.",
+            "score": 0.9275,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-09-01 00:00:00"
+          },
+          {
+            "doc_id": "hoh::10::stale_1",
+            "title": "Aaron Gibson",
+            "text": "He holds the record for heaviest NFL player ever, at 410 lbs, weighing over 440 lbs in high school.",
+            "score": 0.8846,
+            "citation_id": "[2]",
+            "source": "hoh",
+            "timestamp": "2024-08-01"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 1.0
+        }
+      },
+      {
+        "query_id": "17",
+        "query": "How many grass runways does Whanganui Airport have?",
+        "gold_answer": "three",
+        "predicted_answer": "Whanganui Airport [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::17",
+            "title": "Whanganui Airport",
+            "text": "The airport has a single asphalt runway and three grass runways, and its single terminal has two gates.",
+            "score": 0.8604,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-10-01 00:00:00"
+          },
+          {
+            "doc_id": "hoh::17::stale_1",
+            "title": "Whanganui Airport",
+            "text": "The airport has a single asphalt runway and four grass runways, and its single terminal has two gates.",
+            "score": 0.8182,
+            "citation_id": "[2]",
+            "source": "hoh",
+            "timestamp": "2024-09-01"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 1.0
+        }
+      },
+      {
+        "query_id": "20",
+        "query": "How many authors have won the Andre Norton Award during the 19 nomination years?",
+        "gold_answer": "18",
+        "predicted_answer": "95 [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "hoh::20",
+            "title": "Andre Norton Award",
+            "text": "During the 19 nomination years, 95 authors have had works nominated, of which 18 have won.",
+            "score": 0.9138,
+            "citation_id": "[1]",
+            "source": "hoh",
+            "timestamp": "2024-07-01 00:00:00"
+          },
+          {
+            "doc_id": "hoh::20::stale_1",
+            "title": "Andre Norton Award",
+            "text": "During the 19 nomination years, 95 authors have had works nominated, of which 17 have won.",
+            "score": 0.8716,
+            "citation_id": "[2]",
+            "source": "hoh",
+            "timestamp": "2024-06-01"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 1.0
+        }
+      }
+    ],
+    "temporal_relation_or_year_selection_error": [
+      {
+        "query_id": "s_15",
+        "query": "For which NFL season did the Dallas Cowboys win Super Bowl?",
+        "gold_answer": "1993",
+        "predicted_answer": "1992 [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "temprageval::s_20::1",
+            "title": "temprageval_e1_s_20",
+            "text": "The first NFL team to win three Super Bowls in four years, with Super Bowl wins in the 1992, 1993, and 1995 seasons.",
+            "score": 0.365,
+            "citation_id": "[1]",
+            "source": "temprageval",
+            "timestamp": "January 28, 1996"
+          },
+          {
+            "doc_id": "temprageval::s_21::1",
+            "title": "temprageval_e1_s_21",
+            "text": "The first NFL team to win three Super Bowls in four years, with Super Bowl wins in the 1992, 1993, and 1995 seasons.",
+            "score": 0.365,
+            "citation_id": "[2]",
+            "source": "temprageval",
+            "timestamp": "January 28, 1996"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 0.0
+        }
+      },
+      {
+        "query_id": "s_20",
+        "query": "For which NFL season did the Dallas Cowboys win their most recent Super Bowl as of January 31, 2000?",
+        "gold_answer": "1995",
+        "predicted_answer": "1993 [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "temprageval::s_15::2",
+            "title": "temprageval_e2_s_15",
+            "text": "These uniforms celebrated the Cowboys' most recent back-to-back Super Bowl titles in the 1992 and 1993 seasons and were used in most of the Cowboys' remaining games of the season, including the playoffs.",
+            "score": 0.41,
+            "citation_id": "[1]",
+            "source": "temprageval",
+            "timestamp": "January 30, 1994"
+          },
+          {
+            "doc_id": "temprageval::s_16::2",
+            "title": "temprageval_e2_s_16",
+            "text": "These uniforms celebrated the Cowboys' most recent back-to-back Super Bowl titles in the 1992 and 1993 seasons and were used in most of the Cowboys' remaining games of the season, including the playoffs.",
+            "score": 0.41,
+            "citation_id": "[2]",
+            "source": "temprageval",
+            "timestamp": "January 30, 1994"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 0.0
+        }
+      },
+      {
+        "query_id": "s_21",
+        "query": "For which NFL season did the Dallas Cowboys win their most recent Super Bowl before 2007?",
+        "gold_answer": "1995",
+        "predicted_answer": "1993 [1] | evidence: [2]",
+        "selected_evidence": [
+          {
+            "doc_id": "temprageval::s_15::2",
+            "title": "temprageval_e2_s_15",
+            "text": "These uniforms celebrated the Cowboys' most recent back-to-back Super Bowl titles in the 1992 and 1993 seasons and were used in most of the Cowboys' remaining games of the season, including the playoffs.",
+            "score": 0.415,
+            "citation_id": "[1]",
+            "source": "temprageval",
+            "timestamp": "January 30, 1994"
+          },
+          {
+            "doc_id": "temprageval::s_16::2",
+            "title": "temprageval_e2_s_16",
+            "text": "These uniforms celebrated the Cowboys' most recent back-to-back Super Bowl titles in the 1992 and 1993 seasons and were used in most of the Cowboys' remaining games of the season, including the playoffs.",
+            "score": 0.415,
+            "citation_id": "[2]",
+            "source": "temprageval",
+            "timestamp": "January 30, 1994"
+          }
+        ],
+        "citations": [
+          "[1]",
+          "[2]"
+        ],
+        "metrics": {
+          "exact_match": 0.0,
+          "token_f1": 0.0,
+          "citation_title_recall": 0.0
+        }
+      }
+    ]
+  }
+}

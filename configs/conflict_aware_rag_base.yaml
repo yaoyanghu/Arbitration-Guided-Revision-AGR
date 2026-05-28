@@ -1,0 +1,28 @@
+project:
+  name: New_ChronoRAG
+  root_dir: ${CHRONORAG_ROOT:D:/HUYAOYANG/Work/New_ChronoRAG}
+  seed: 42
+  device: cpu
+
+paths:
+  data_dir: ${project.root_dir}/data
+  processed_data_dir: ${paths.data_dir}/processed
+  corpus_dir: ${paths.data_dir}/corpus
+  index_dir: ${project.root_dir}/indexes
+  runs_dir: ${project.root_dir}/runs
+  log_dir: ${project.root_dir}/logs
+
+mainline:
+  dataset_name: pending_main_dataset
+  queries_path: ${paths.processed_data_dir}/fever/fever.jsonl
+  corpus_path: ${paths.corpus_dir}/demo_corpus.jsonl
+  bm25_index_dir: ${paths.index_dir}/bm25
+  retrieval_top_k: 5
+  evidence_top_k: 3
+  bm25_weight: 0.45
+  lexical_weight: 0.20
+  temporal_weight: 0.20
+  conflict_weight: 0.10
+  reliability_weight: 0.05
+  generation_mode: extractive
+  citation_style: bracket

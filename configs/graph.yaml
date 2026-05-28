@@ -1,0 +1,9 @@
+graph:
+  enabled: false
+  max_nodes: 20
+  edge_types:
+    - support
+    - contradict
+    - update
+    - same_source
+    - corroborate

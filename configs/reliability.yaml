@@ -1,0 +1,8 @@
+reliability:
+  enabled: true
+  default_source_score: 0.5
+  fusion:
+    method: weighted_sum
+    retrieval_weight: 0.5
+    temporal_weight: 0.25
+    source_weight: 0.25

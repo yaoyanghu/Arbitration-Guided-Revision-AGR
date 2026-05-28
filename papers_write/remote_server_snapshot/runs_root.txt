@@ -1,0 +1,11 @@
+# /home/huyaoyang/Projects/flashrag_project_20251213/ChronoRAG/runs
+bm25_demo	4096
+fever_demo_route_a	4096
+fever_hetero_subset_route_a	8192
+fever_official_route_a	8192
+fever_official_route_a_1000	4096
+fever_official_route_a_1000.zip	11345
+fever_official_route_a_disjoint_1000	8192
+fever_official_route_a_full_dev	4096
+fever_real_subset_route_a	4096
+fever_real_subset_route_a_debug	4096
