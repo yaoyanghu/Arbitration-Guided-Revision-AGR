@@ -1,146 +1,96 @@
-# ChronoRAG
+# Arbitration-Guided Revision (AGR)
 
-ChronoRAG is a portable experiment scaffold for temporal-conflict RAG research. This repository is structured so it can be deployed first on a rented cloud GPU server and later moved to a school server or GitHub with minimal path changes.
+This repository contains the code scaffold and paper-facing audit artifacts for the AGR fixed-pool RAG experiments.
 
-## Recommended project root
+AGR studies answer revision under a frozen evidence-pool protocol: the system may revise an initial TP-FP RAG answer using only the already retrieved evidence pool, without issuing new retrieval, rebuilding indexes, or exposing gold answers to prompts.
 
-Primary path used for deployment compatibility:
+## What Is Included
 
-```bash
-/home/huyaoyang/Projects/ChronoRAG
-```
+- `src/`: core ChronoRAG/AGR experiment modules used during the development of temporal-conflict RAG pipelines.
+- `configs/`: experiment and ablation configs.
+- `configs/fixed_pool/published_baseline_adaptations.yaml`: fixed-pool protocol config for the published-method adaptation runs.
+- `scripts/fixed_pool_baselines/`: reproducibility scripts for Self-Refine-FP, RARR-FP, FaithfulRAG-inspired FP, CRAG-inspired FP evaluator control, evaluation, bootstrap CI, manifest checks, and closure reports.
+- `reports/published_baseline_adaptations_20260621/`: lightweight paper-facing result summaries, naming audit, claims audit, runtime table, bootstrap CI table, and qualitative case shortlist.
 
-If the target machine uses another home directory, keep the `ChronoRAG` folder name unchanged and update only the absolute parent path in configs or environment variables.
+Large datasets, model checkpoints, indexes, raw predictions, and generated output directories are intentionally not committed.
 
-## Project layout
+## Fixed-Pool Protocol
 
-```text
-ChronoRAG/
-  configs/
-  data/
-  corpus/
-  indexes/
-  src/
-  scripts/
-  experiments/
-  outputs/
-  logs/
-  reports/
-  docs/
-  tests/
-```
+The published baseline adaptation scripts follow these constraints:
 
-## Current status
+- no extra retrieval;
+- no index rebuild;
+- no external search;
+- no gold answer in prompts;
+- no AGR candidate score, candidate family, arbitration margin, trigger reason, or update policy exposed to published-method baselines;
+- all runs should record `llm_calls`, token counts, latency, parse status, answer-change status, and `no_extra_retrieval=true`.
 
-Completed modules:
-
-- FEVER input normalization for demo data and real FEVER ingestion entry points
-- corpus interface with demo corpus support and explicit missing-data errors
-- BM25 index build/load/search
-- rule-based temporal score
-- rule-based source reliability score
-- score fusion rerank
-- Route A run orchestration and artifact export under `runs/{exp_name}/`
-
-Not completed:
-
-- Route B
-- Route C
-- dense retrieval
-- generation
-- evidence graph
-- learned temporal model
-- learned reliability model
-- full Wikipedia 2018 corpus support
-- HoH ingestion
-
-## Demo vs real data
-
-Demo data:
-
-- `data/demo/fever_raw_demo.jsonl`
-- `data/demo/demo_corpus_source.jsonl`
-- hand-curated, tiny, only for smoke testing
-- expected to produce near-perfect retrieval because claims and corpus were written to align
-
-Real FEVER subset:
-
-- sourced from the real FEVER dataset, preferably `labelled_dev`
-- claims and labels are real
-- evidence titles come from FEVER annotations
-- if a local Wikipedia 2018 dump is unavailable, the minimal real corpus is constructed only from gold evidence pages, so it is still much smaller and easier than the full benchmark corpus
-
-## Demo Run
-
-Demo preparation:
+The default server-side project root used during the experiments was:
 
 ```bash
-bash scripts/bootstrap_env.sh
-bash scripts/check_env.sh
-bash scripts/prepare_all.sh
-python3 -m src.data.prepare_fever --input data/demo/fever_raw_demo.jsonl --output data/processed/fever/fever.jsonl --sample-size 3 --seed 42
-python3 -m src.corpus.build_wiki2018_corpus --use-demo --output data/corpus/demo_corpus.jsonl
+/home/huyaoyang/Projects/flashrag_project_20251213/New_ChronoRAG
 ```
 
-Demo Route A:
+Update `configs/fixed_pool/published_baseline_adaptations.yaml` before running on a new machine.
+
+## Main Fixed-Pool Scripts
 
 ```bash
-bash scripts/run_route_a.sh --exp-name fever_demo_route_a
+# Build or inspect the frozen manifest
+python -m scripts.fixed_pool_baselines.build_fixed_pool_manifest
+
+# Validate fixed-pool foundation artifacts
+python -m scripts.fixed_pool_baselines.smoke_test_foundation
+
+# Run fixed-pool adaptations
+python -m scripts.fixed_pool_baselines.run_self_refine_fp --dataset hoh --dry-run 5
+python -m scripts.fixed_pool_baselines.run_rarr_fp --dataset hoh --dry-run 5
+python -m scripts.fixed_pool_baselines.run_faithfulrag_fp --dataset hoh --dry-run 5
+python -m scripts.fixed_pool_baselines.run_crag_fp_evaluator_control --dataset hoh --dry-run 5
+
+# Evaluate predictions
+python -m scripts.fixed_pool_baselines.evaluate_fixed_pool_predictions --help
+
+# Generate final closure/audit tables from existing outputs
+python -m scripts.fixed_pool_baselines.nightly_full_closure
 ```
 
-Remote demo Route A:
+Full LLM runs are expensive and depend on local model checkpoints; dry-runs and manifest checks should be used first.
 
-```bash
-cd /home/huyaoyang/Projects/ChronoRAG
-export CHRONORAG_ROOT=/home/huyaoyang/Projects/ChronoRAG
-/data/miniconda/bin/conda run -n chronorag python -m src.eval.eval_main --route routeA --config configs/base.yaml --exp-name fever_demo_route_a_remote
-```
+## Paper-Facing Result Snapshot
 
-Install optional research dependencies only when needed:
+The latest checked closure package reported:
 
-```bash
-source /data/miniconda/etc/profile.d/conda.sh
-conda activate chronorag
-pip install -r requirements.full.txt
-```
+- prediction grid: 27/27 complete;
+- paired bootstrap rows: 108 with 10,000 resamples, seed 42;
+- strongest non-AGR baseline: TP-FP RAG;
+- AGR macro performance over HOH-1024, TempRAGEval-1244, and TimeQA-500: 34.88 EM / 47.25 F1;
+- TP-FP RAG macro performance: 28.88 EM / 37.27 F1;
+- AGR gain over strongest non-AGR baseline: +6.00 EM / +9.99 F1.
 
-If Conda is unavailable on the target machine, `bash scripts/bootstrap_env.sh`
-will automatically fall back to a local virtual environment at `.venv/`.
+See `reports/published_baseline_adaptations_20260621/` for the method naming audit, claims audit, main table, runtime table, bootstrap CI table, and case shortlist.
 
-## Current scope
+## Data And Model Requirements
 
-This initial version focuses on:
+The scripts expect local fixed-pool inputs, retrieved evidence, TP-FP/AGR prediction files, and local LLM checkpoints. The experiment server used:
 
-- portable directory creation
-- environment and GPU checks
-- a minimal runnable Route A: FEVER small sample or real FEVER subset + corpus interface + BM25 + rule-based temporal and reliability scoring + basic evaluation
-- a lightweight default environment that is easier to reproduce on small rented GPUs
+- HOH-1024;
+- TempRAGEval-1244;
+- TimeQA-500;
+- optional ArchivalQA-derived-500 appendix checks;
+- Qwen2.5-7B-Instruct as the primary fixed-pool adaptation model.
 
-## Data status
+These assets are not bundled in the repository. Configure their paths in `configs/fixed_pool/published_baseline_adaptations.yaml`.
 
-- No real Wikipedia 2018 dump is bundled in this repository.
-- `src/corpus/build_wiki2018_corpus.py` will raise a clear error unless you pass `--input <corpus.jsonl>` or `--use-demo`.
-- A small demo corpus is bundled only for smoke testing.
-- HoH is not implemented in the current minimal Route A and is not downloaded or fabricated here.
+## Repository Hygiene
 
-## Capability boundary
+The `.gitignore` excludes heavy and generated artifacts such as:
 
-This version can:
+- `outputs/`;
+- `data/`;
+- `indexes/`;
+- `models/`;
+- `logs/`;
+- Python caches and local virtual environments.
 
-- run a minimal Route A retrieval pipeline
-- export stage-by-stage jsonl artifacts
-- compare BM25, temporal fusion, and temporal plus reliability fusion on a small FEVER setup
-
-This version cannot:
-
-- support claims with no retrievable evidence corpus beyond what you explicitly build
-- claim benchmark-level FEVER performance
-- replace a full Wikipedia 2018 retrieval benchmark
-- support Route B or Route C conclusions
-- support learned scoring or generation quality claims
-
-## Notes for migration
-
-- Keep the repository root folder name as `ChronoRAG`.
-- Prefer environment variables such as `CHRONORAG_ROOT` over hard-coded paths.
-- Commit code and configs, but do not commit large data, indexes, logs, or generated outputs.
+Commit code, configs, and small audit summaries only.

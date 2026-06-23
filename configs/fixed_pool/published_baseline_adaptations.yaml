@@ -1,0 +1,84 @@
+project:
+  root: /home/huyaoyang/Projects/flashrag_project_20251213/New_ChronoRAG
+  environment: /home/huyaoyang/miniconda3/envs/ChronoRAG
+  output_root: ${project.root}/outputs/published_baseline_adaptations_20260621
+
+datasets:
+  hoh:
+    label: HOH-1024
+    queries: ${project.root}/data/processed/hoh_formal_1024.jsonl
+    retrieval: ${project.root}/runs/stageG_main_formal_hoh1024_20260414__full_model/retrieval_results.jsonl
+    tp_fp: ${project.root}/outputs/aei_submission_closure_v1/predictions/strong_baselines/tp_fp_rag_hoh1024.jsonl
+    agr: ${project.root}/outputs/aei_submission_closure_v1/predictions/strong_baselines/agr_hoh1024.jsonl
+  temprageval:
+    label: TempRAGEval-1244
+    queries: ${project.root}/data/processed/temprageval_formal_1244.jsonl
+    retrieval: ${project.root}/runs/stageG_main_formal_temprageval1244_20260414__full_model/retrieval_results.jsonl
+    tp_fp: ${project.root}/outputs/aei_submission_closure_v1/predictions/strong_baselines/tp_fp_rag_temprageval1244.jsonl
+    agr: ${project.root}/outputs/aei_submission_closure_v1/predictions/strong_baselines/agr_temprageval1244.jsonl
+  timeqa:
+    label: TimeQA-500
+    queries: ${project.root}/outputs/paper_assets_final/timeqa500_formal/timeqa500_examples.jsonl
+    retrieval: ${project.root}/outputs/paper_assets_final/timeqa500_formal/retrieval_results.jsonl
+    tp_fp: ${project.root}/outputs/aei_submission_closure_v1/predictions/strong_baselines/tp_fp_rag_timeqa500.jsonl
+    agr: ${project.root}/outputs/aei_submission_closure_v1/predictions/strong_baselines/agr_timeqa500.jsonl
+  archivalqa:
+    label: ArchivalQA-derived-500
+    queries: ${project.root}/outputs/paper_assets_final/archivalqa500_formal/archivalqa500_examples.jsonl
+    retrieval: ${project.root}/outputs/paper_assets_final/archivalqa500_formal/retrieval_results.jsonl
+    tp_fp: ${project.root}/outputs/aei_submission_closure_v1/predictions/strong_baselines/tp_fp_rag_archivalqa500.jsonl
+    agr: ${project.root}/outputs/aei_submission_closure_v1/predictions/strong_baselines/agr_archivalqa500.jsonl
+
+models:
+  primary_qwen: /home/huyaoyang/models/hub/llm/Qwen2___5-7B-Instruct
+  consistency_llama3: /home/huyaoyang/models/hub/llm/Meta-Llama-3-8B-Instruct
+  self_rag_reference: /home/huyaoyang/models/selfrag_llama2_7b
+
+decoding:
+  temperature: 0.1
+  top_p: 1.0
+  max_new_tokens: 256
+  batch_size: 8
+  seed: 42
+
+fixed_pool:
+  retrieval_top_k: 4
+  generation_evidence_top_k: 2
+  allow_extra_retrieval: false
+  allow_external_search: false
+  allow_index_rebuild: false
+  allow_gold_in_prompt: false
+  allow_agr_signals_for_published_baselines: false
+  initial_answer_source: existing_tp_fp_prediction
+
+evaluation:
+  bootstrap_resamples: 10000
+  bootstrap_seed: 42
+  paired_by: query_id
+  metrics: [EM, F1, Precision, Recall, repair, harm, net_repair, revision_rate, answer_change_rate]
+
+logging_fields:
+  - query_id
+  - dataset
+  - model_path
+  - prompt_version
+  - llm_calls
+  - total_input_tokens
+  - total_output_tokens
+  - total_latency_sec
+  - answer_changed
+  - parse_status
+  - no_extra_retrieval
+
+baselines:
+  - self_refine_fp
+  - rarr_fp_adaptation
+  - faithfulrag_fp_adaptation
+  - crag_inspired_fp_evaluator_control
+  - self_rag_reference
+
+run_order:
+  - phase1_manifest_and_offline_validation
+  - self_refine_fp_dry_run
+  - self_refine_fp_full
+  - remaining_adaptations_after_fidelity_review
